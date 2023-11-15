@@ -1,13 +1,15 @@
 // Login.js
 // Login.js
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from './contexts/authcontext';
 import { CognitoUser, AuthenticationDetails, CognitoUserPool } from 'amazon-cognito-identity-js';
 
 const Login = ({ history }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const { setAccessToken } = useContext(AuthContext);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -34,7 +36,9 @@ const Login = ({ history }) => {
             onSuccess: (session) => {
                 console.log('Authentication successful', session);
 
-                window.localStorage.setItem("SESSION", JSON.stringify(session))
+                const idTokenString = session.getIdToken().getJwtToken();
+                console.log(idTokenString)
+                setAccessToken(idTokenString);
 
                 history.push('/home');
             },
