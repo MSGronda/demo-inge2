@@ -1,11 +1,11 @@
 // App.js
 
 import React from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import Home from "./home";
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './login';
 import Registration from './registeration';
 import ConfirmRegistration from './confirmation';
-import Home from "./home";
 
 const App = () => {
     return (

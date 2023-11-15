@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Home = () => {
     const [username, setUsername] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
-        // Retrieve the user from localStorage
         const user = window.localStorage.getItem('SESSION');
-        console.log(user)
-        // Redirect to login if the user is not authenticated
-        if (!user) {
-            return <Redirect to="/login" />;
-        } else {
-            let user_data = JSON.parse(user)
 
+        if (!user) {
+            // Redirige a la página de inicio de sesión
+            history.push('/login');
+        } else {
+            let user_data = JSON.parse(user);
             setUsername(user_data.idToken.payload["cognito:username"]);
-            console.log(username)
         }
-    }, [username]); // Empty dependency array to run the effect only once on mount
+    }, [history]);
 
     return (
         <div>
