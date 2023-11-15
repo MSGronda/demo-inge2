@@ -4,9 +4,14 @@
 import React, { useState } from 'react';
 import { CognitoUser, AuthenticationDetails, CognitoUserPool } from 'amazon-cognito-identity-js';
 
-const Login = () => {
+const Login = ({ history }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleLogin = () => {
         const authenticationData = {
@@ -29,6 +34,9 @@ const Login = () => {
             onSuccess: (session) => {
                 console.log('Authentication successful', session);
 
+                window.localStorage.setItem("SESSION", JSON.stringify(session))
+
+                history.push('/home');
             },
             onFailure: (error) => {
                 if (error.code === 'UserNotConfirmedException') {
@@ -57,10 +65,15 @@ const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
             />
             <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={togglePasswordVisibility}
             />
             <button onClick={handleLogin}>Login</button>
         </div>
