@@ -9,6 +9,11 @@ const Registration = ({ history }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleRegistration = async () => {
         try {
@@ -57,9 +62,14 @@ const Registration = ({ history }) => {
             />
             <label>Password:</label>
             <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={togglePasswordVisibility}
             />
             <button onClick={handleRegistration}>Register</button>
         </div>
