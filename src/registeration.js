@@ -13,8 +13,8 @@ const Registration = ({ history }) => {
     const handleRegistration = async () => {
         try {
             const poolData = {
-                UserPoolId: 'sa-east-1_2I1N7Ajgz',
-                ClientId: '5khu253vk5d3fn8oqc9cf27ta3',
+                UserPoolId: process.env.REACT_APP_USERPOOL_ID,
+                ClientId: process.env.REACT_APP_CLIENT_ID,
             };
 
             const userPool = new CognitoUserPool(poolData);
