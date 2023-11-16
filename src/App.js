@@ -4,21 +4,24 @@ import React from 'react';
 import Home from "./home";
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { AuthProvider } from './contexts/authcontext';
+import ProtectedRoute from './ProtectedRoute';
+import LoginRoute from './LoginRoute';
 import Login from './login';
 import Registration from './registeration';
 import ConfirmRegistration from './confirmation';
 import RideComponent from './ride';
 
 const App = () => {
+
     return (
-        <AuthProvider>
+        <AuthProvider >
             <Router>
                 <Switch>
-                    <Route path="/home" component={Home} />
-                    <Route path="/login" component={Login} />
+                    <ProtectedRoute exact path="/" component={Home} />
+                    <LoginRoute path="/login" component={Login} />
                     <Route path="/register" component={Registration} />
                     <Route path="/confirm-registration" component={ConfirmRegistration} />
-                    <Route path="/ride" component={RideComponent} /> 
+                    <ProtectedRoute path="/ride" component={RideComponent} /> 
                 </Switch>
             </Router>
         </AuthProvider>

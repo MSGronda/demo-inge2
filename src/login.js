@@ -36,11 +36,18 @@ const Login = ({ history }) => {
             onSuccess: (session) => {
                 console.log('Authentication successful', session);
 
-                const idTokenString = session.getIdToken().getJwtToken();
-                console.log(idTokenString)
-                setAccessToken(idTokenString);
+                const idToken = session.getIdToken().getJwtToken();
+                const accessToken = session.getAccessToken().getJwtToken();
+                const refreshToken = session.getRefreshToken().getToken();
 
-                history.push('/home');
+                const userSession = {
+                    idToken,
+                    accessToken,
+                    refreshToken,
+                };
+                setAccessToken(idToken, userSession);
+
+                history.push('/');
             },
             onFailure: (error) => {
                 if (error.code === 'UserNotConfirmedException') {
